@@ -1,8 +1,4 @@
-Sure! Here's a professional and detailed `README.md` file template for your **Dashboard microservice** in your SaaS project. This assumes you're using Node.js with Express and that it's part of a microservice architecture (Auth, Dashboard, etc.).
 
----
-
-```markdown
 # 📊 Dashboard Microservice
 
 The **Dashboard Microservice** is a part of the larger SaaS platform architecture. It handles all user-facing dashboard-related features such as displaying personalized information, service usage analytics, settings, and more.
@@ -153,11 +149,4 @@ Matidza M.Z
 [GitHub](https://github.com/Matidza)
 SaaS Project — 2025
 
----
 
-```
-
----
-
-Let me know if you'd like to tailor this further with your **exact routes**, **Next.js frontend**, or integrate **OpenAPI specs**.
-```

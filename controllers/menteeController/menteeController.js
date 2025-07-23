@@ -1,0 +1,34 @@
+import MentorProfileModel from "../../models/mentorModel.js";
+
+export const menteeDashboard = async (request, response) => {
+    const { page } = request.query
+    const sessionPerPage = 10;
+    try {
+        let pagenumber = 0;
+        if ( page <= 1) {
+            pagenumber = 0
+        } else {
+            pagenumber = page -1
+        }
+
+        const allProfile = await MentorProfileModel.find()
+            .sort({createdAt: -1})
+            .skip(pagenumber * sessionPerPage)
+            .limit(sessionPerPage)
+            
+        return response.status(200).
+            json({
+                success: true,
+                field: null,
+                message: "Profile created successfully.",
+                result: allProfile
+            })
+    } catch (error){
+        return response.status(500).
+            json({
+                success: false,
+                message: "Internal server error, try again"
+            })
+    }
+}
+export default menteeDashboard;

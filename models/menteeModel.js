@@ -1,15 +1,30 @@
 import mongoose from "mongoose";
 
-const menteeSchema = new mongoose.Schema({
-    name:{},
-    surname:{},
-    currentJobTitle:{},
-    companyName:{},
-    description:{},
-    key_interview_skiils:{},
-    userId: {}
+const menteeProfileSchema = new mongoose.Schema(
+    {
+        name:{
+            type: String,
+            required: [true, "Name is required!"],
+            trim: true,        
+        },
+        surname:{
+            type: String,
+            required: [true, "Surname is required!"],
+            trim: true,      
+        },
+        key_interview_skiils:[],
+        userId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "UserModel",
+            //required: true,
+        },
+        profilePic: {
 
-}, { timestamps: true});
+        },
+        CV: {},
 
-const MenteeModel = mongoose.model("MenteeModel", menteeSchema);
-export default MenteeModel
+
+    }, { timestamps: true});
+
+const MenteeProfileModel = mongoose.model("MenteeProfileModel", menteeProfileSchema);
+export default MenteeProfileModel

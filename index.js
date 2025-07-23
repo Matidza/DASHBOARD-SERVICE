@@ -5,6 +5,9 @@ import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import mongoose from 'mongoose'
 import { errorHandler } from './middlewares/errorHandler.js'
+import menteeRoutes from "./routes/mentee_routes/menteeRoutes.js"
+import mentorRoutes from "./routes/mentor_routes/mentorRoutes.js"
+
 import dotenv from 'dotenv'
 
 dotenv.config();
@@ -31,11 +34,11 @@ mongoose.connect(process.env.MONGO_URI).then( () => {
 })
 
 
-// Route connection will be here
-app.get('/', (req, res) => {
-    res.send("<h2>hellow</h2>")
-    console.log("hellow")
-})
+// Route connection for mentees
+app.use("/mentee", menteeRoutes)
+
+// Route connection for mentors wil be here
+app.use("/mentor", mentorRoutes)
 
 // Global error handler
 app.use(errorHandler);

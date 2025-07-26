@@ -22,8 +22,6 @@ const menteeProfileSchema = new mongoose.Schema(
 
         },
         CV: {},
-
-
     }, { timestamps: true});
 
 const MenteeProfileModel = mongoose.model("MenteeProfileModel", menteeProfileSchema);

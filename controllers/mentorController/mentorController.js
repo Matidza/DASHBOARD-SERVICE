@@ -7,15 +7,15 @@ export const mentorDashboard = async (request, response) => {
 export default mentorDashboard;
 
 export const createProfile = async (request, response) => {
-    const { name, surname, currentJobTitle,
-        companyName, description,
-    } = request.body
+    const { name, surname, currentJobTitle,companyName, description,} = request.body
     
     try {
-        const newProfile = await MentorProfileModel.create({ name, surname, currentJobTitle,
-        companyName, description, })
+        const newProfile = await MentorProfileModel.create({ 
+            name, surname,
+            currentJobTitle,companyName, 
+            description, 
+        })
         //const result = await newProfile.save()
-
         return response.status(201).
             json({
                 success: true,

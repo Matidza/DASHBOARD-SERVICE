@@ -21,7 +21,7 @@ export const menteeDashboard = async (request, response) => {
             json({
                 success: true,
                 field: null,
-                message: "Profile created successfully.",
+                message: "here's a list of Professionals that can help you prep for an interview.",
                 result: allProfile
             })
     } catch (error){

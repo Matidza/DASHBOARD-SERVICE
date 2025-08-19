@@ -33,3 +33,7 @@ export const createProfile = async (request, response) => {
             })
     }
 }
+
+export const profile = (request, response) => {
+    
+}

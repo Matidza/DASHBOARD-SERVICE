@@ -27,7 +27,7 @@ const mentorProfileShema = new mongoose.Schema(
             required: [true, "Description is required!"],
             trim: true,
         },
-        key_interview_skiils:[],
+        tags:[],
         rate:{},
         userId: {
             type: mongoose.Schema.Types.ObjectId,

@@ -33,3 +33,17 @@ export const menteeDashboard = async (request, response) => {
     }
 }
 export default menteeDashboard;
+
+export const individualBookPage = (request, response) => {
+    // 
+}
+
+export const allMentorBookings = (request, response) => {
+    // caching
+    //pagination
+    // N + 1 rule
+}
+
+export const bookSession = (request, response) => {
+    
+}

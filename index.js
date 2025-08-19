@@ -15,6 +15,7 @@ dotenv.config();
 // Initialise the app
 const app = express();
 
+// Link the API with the front-end
 app.use(cors({
     origin: 'http://localhost:3000',
     credentials: true // for Cookie-based flow

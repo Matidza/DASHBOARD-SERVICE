@@ -16,7 +16,7 @@ const menteeProfileSchema = new mongoose.Schema(
         userId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "UserModel",
-            //required: true,
+            required: true,
         },
         profilePic: {
 

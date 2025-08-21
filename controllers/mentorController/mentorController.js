@@ -7,48 +7,73 @@ export const mentorDashboard = async (request, response) => {
 }
 export default mentorDashboard;
 
-export const createProfile = async (request, response) => {
-    const { name, surname, currentJobTitle,companyName, description,} = request.body
-    // Logged In user
-    const {userId} = request.user
+
+
+// ✅ Create Mentor Profile
+export const createMentorProfile = async (request, response) => {
+    const { name, surname, currentJobTitle, companyName, description } = request.body;
+    const { userId, user_type } = request.user; // ✅ Comes from JWT payload
+
     try {
-        const { value, error} = createProfileSchema.validate({
-            name, surname,
-            currentJobTitle,companyName, 
-            description, userId
-        })
+        // 1. Check if user is a mentor
+        if (user_type !== "mentor") {
+            return response.status(403).json({
+                success: false,
+                message: "Only mentors are allowed to create a profile."
+            });
+        }
+
+        // 2. Check if mentor already has a profile
+        const existingProfile = await MentorProfileModel.findOne({ userId });
+        if (existingProfile) {
+            return response.status(400).json({
+                success: false,
+                message: "You already have a profile. You can only create one."
+            });
+        }
+
+        // 3. Validate fields
+        const { error } = createProfileSchema.validate({
+            name,
+            surname,
+            currentJobTitle,
+            companyName,
+            description,
+            userId
+        });
+
         if (error) {
             return response.status(400).json({
                 success: false,
                 message: error.details[0].message
-            })
+            });
         }
-        // check if userId has created a profile already
-        // create the profile
-        const newProfile = await MentorProfileModel.create({ 
-            userId, name, surname,
-            currentJobTitle,companyName, 
+
+        // 4. Create profile
+        const newProfile = await MentorProfileModel.create({
+            userId,
+            name,
+            surname,
+            currentJobTitle,
+            companyName,
             description
-        })
-       console.log(userId)
-        return response.status(201).
-            json({
-                success: true,
-                field: null,
-                message: "Profile created successfully.",
-                result: newProfile
-            })
-        
+        });
+
+        return response.status(201).json({
+            success: true,
+            message: "Profile created successfully.",
+            result: newProfile
+        });
+
     } catch (error) {
-        console.log(error)
-        console.log("Error has occured")
-        return response.status(500).
-            json({
-                success: false,
-                message: "Internal server error, try again"
-            })
+        console.error("Error creating profile:", error);
+        return response.status(500).json({
+            success: false,
+            message: "Internal server error, please try again."
+        });
     }
-}
+};
+
 
 export const profile = (request, response) => {
     

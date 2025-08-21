@@ -1,32 +1,25 @@
 import MentorProfileModel from "../../models/mentorModel.js";
 
+
 export const menteeDashboard = async (request, response) => {
   const { page } = request.query;
   const sessionPerPage = 10;
 
   try {
-    let pagenumber = 0;
-    if (page <= 1) {
-      pagenumber = 0;
-    } else {
-      pagenumber = page - 1;
-    }
+    const pagenumber = Math.max(Number(page || 1) - 1, 0);
 
-    const allProfile = await MentorProfileModel.find()
+    const allProfiles = await MentorProfileModel.find()
       .sort({ createdAt: -1 })
       .skip(pagenumber * sessionPerPage)
       .limit(sessionPerPage)
-      .populate({
-        path: "userId", // field in your schema that references UserModel
-        select: "email user_type", // only pick what you need
-      });
+      // .populate({})
 
     return response.status(200).json({
       success: true,
       field: null,
       message:
         "Here's a list of Professionals that can help you prep for an interview.",
-      result: allProfile,
+      result: allProfiles,
     });
   } catch (error) {
     console.error("Error in menteeDashboard:", error);
@@ -36,8 +29,6 @@ export const menteeDashboard = async (request, response) => {
     });
   }
 };
-export default menteeDashboard;
-
 
 
 

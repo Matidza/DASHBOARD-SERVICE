@@ -1,3 +1,4 @@
+import { createProfileSchema } from "../../middlewares/mentorValidator.js";
 import MentorProfileModel from "../../models/mentorModel.js";
 
 export const mentorDashboard = async (request, response) => {
@@ -8,14 +9,28 @@ export default mentorDashboard;
 
 export const createProfile = async (request, response) => {
     const { name, surname, currentJobTitle,companyName, description,} = request.body
-    
+    // Logged In user
+    const {userId} = request.user
     try {
-        const newProfile = await MentorProfileModel.create({ 
+        const { value, error} = createProfileSchema.validate({
             name, surname,
             currentJobTitle,companyName, 
-            description, 
+            description, userId
         })
-        //const result = await newProfile.save()
+        if (error) {
+            return response.status(400).json({
+                success: false,
+                message: error.details[0].message
+            })
+        }
+        // check if userId has created a profile already
+        // create the profile
+        const newProfile = await MentorProfileModel.create({ 
+            userId, name, surname,
+            currentJobTitle,companyName, 
+            description
+        })
+       console.log(userId)
         return response.status(201).
             json({
                 success: true,
@@ -23,6 +38,7 @@ export const createProfile = async (request, response) => {
                 message: "Profile created successfully.",
                 result: newProfile
             })
+        
     } catch (error) {
         console.log(error)
         console.log("Error has occured")

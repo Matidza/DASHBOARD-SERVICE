@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 //const JWT_SECRET = process.env.SECRET_ACCESS_TOKEN // same secret as Auth Service
-
+/*** 
 export function authenticateToken(req, res, next) {
     // ✅ Get token from cookie, not header
     const token = req.cookies.accessToken;
@@ -11,7 +11,7 @@ export function authenticateToken(req, res, next) {
     if (!token) {
         return res.status(403).json({
             success: false,
-            message: "Unauthorized: No token provided"
+            message: "Unauthorized: must be looged In to acess!"
         });
     }
 
@@ -29,7 +29,9 @@ export function authenticateToken(req, res, next) {
 }
 export default authenticateToken;
 
-/***
+   */
+
+export function authenticateToken(request, response, next) {
     const token = request.cookies['accessToken'] || request.headers['authorization']?.split(' ')[1];
     if (!token) {
         return response.status(401)
@@ -49,4 +51,4 @@ export default authenticateToken;
         next();
     });
 }
-*/
+export default authenticateToken;
